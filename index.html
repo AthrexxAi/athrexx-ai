@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Athrexx AI Chatbot</title>
+<style>
+  :root {
+    --gold: #d4af37; /* Updated rich gold */
+    --gold-light: #ffcc70;
+    --gold-soft: #f7e6c4;
+    --white: #ffffff;
+    --dark-bg: #0b1f1d;
+    --dark-green: #043a32;
+    --chat-bg-light: #f9f9f9;
+    --chat-bg-dark: #121212;
+    --blur: 12px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--gold-soft), var(--white));
+    color: #222;
+    overflow-x: hidden;
+    transition: all 0.4s ease;
+  }
+
+  body.dark-mode {
+    background: linear-gradient(135deg, var(--dark-bg), var(--dark-green));
+    color: var(--white);
+  }
+
+  /* ===== HEADER ===== */
+  /* ===== HEADER ===== */
+/* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 75px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  z-index: 1000;
+  background: linear-gradient(90deg, #e4d445 0%, #926d06 100%);
+  border-bottom: 1px solid rgba(0, 195, 255, 0.3);
+  box-shadow: 0 0 25px rgba(0, 195, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+}
+
+/* ===== MODERN LOGO ===== */
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  background: linear-gradient(120deg, #00c3ff, #0078ff, #ffffff);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineFlow 5s linear infinite;
+  text-shadow: 0 0 20px rgba(0, 195, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.logo:hover {
+  transform: scale(1.08);
+  text-shadow: 0 0 25px rgba(0, 0, 0, 0.9), 0 0 40px rgba(238, 255, 0, 0.6);
+}
+
+/* Custom gradient per section */
+.logo .ath {
+  color: transparent;
+  background: linear-gradient(120deg, #ccba14, #042c38);
+  -webkit-background-clip: text;
+}
+
+.logo .rexx {
+  color: transparent;
+  background: linear-gradient(120deg, #68659e, #db9b9b);
+  -webkit-background-clip: text;
+}
+
+.logo .ai {
+  font-size: 22px;
+  background: linear-gradient(120deg, #000000, #ff0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-left: 6px;
+  opacity: 0.8;
+  letter-spacing: 2px;
+}
+
+@keyframes shineFlow {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ===== BUTTONS ===== */
+.nav-buttons button {
+  background: rgba(0, 195, 255, 0.15);
+  border: 1px solid rgba(0, 195, 255, 0.3);
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-buttons button:hover {
+  background: linear-gradient(90deg, #00c3ff, #0078ff);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
+  transform: scale(1.1);
+}
+
+
+@keyframes shineFlow {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+  @keyframes headerFlow {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #000, #333, #000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    animation: textShine 4s infinite linear;
+  }
+
+  @keyframes textShine {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .nav-buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  .nav-buttons button {
+    background: #185c2d;
+    color: var(--gold-light);
+    border: 1px solid var(--gold-light);
+    padding: 8px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+
+  .nav-buttons button:hover {
+    background: var(--gold);
+    color: #000;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px var(--gold-light);
+  }
+
+  .particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: floatParticle 8s linear infinite;
+  }
+
+  @keyframes floatParticle {
+    from { transform: translateY(0) scale(1); opacity: 0.9; }
+    to { transform: translateY(-200px) scale(0.5); opacity: 0; }
+  }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    max-width: 500px;
+    margin: 120px auto 100px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    backdrop-filter: blur(var(--blur));
+    transition: all 0.3s ease;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  body.dark-mode .container {
+    background: rgba(4,58,50,0.5);
+    color: var(--gold);
+  }
+
+  .chat-box {
+    height: 420px;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+  }
+
+  .message {
+    padding: 12px 18px;
+    border-radius: 18px;
+    margin-bottom: 10px;
+    max-width: 75%;
+    animation: messagePop 0.4s ease;
+  }
+
+  @keyframes messagePop {
+    from { opacity: 0; transform: translateY(10px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .user {
+    align-self: flex-end;
+    background: var(--gold);
+    color: #000;
+  }
+
+  .bot {
+    align-self: flex-start;
+    background: #e6e6e6;
+    color: #000;
+  }
+
+  body.dark-mode .bot {
+    background: #0e2f29;
+    color: var(--gold);
+  }
+
+  .input-area {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background: inherit;
+  }
+
+  input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    background: #f2f2f2;
+    transition: all 0.3s;
+  }
+
+  body.dark-mode input {
+    background: #143c36;
+    color: var(--gold-light);
+  }
+
+  button.send {
+    background: var(--gold);
+    border: none;
+    padding: 10px 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+  }
+
+  button.send:hover {
+    transform: scale(1.15) rotate(10deg);
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: rgba(255,255,255,0.2);
+    color: #000;
+    backdrop-filter: blur(var(--blur));
+    border-top: 1px solid rgba(255,255,255,0.3);
+    font-size: 14px;
+    animation: slideUp 0.8s ease;
+  }
+
+  body.dark-mode footer {
+    color: var(--gold-light);
+    background: rgba(4,58,50,0.5);
+  }
+
+  footer a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* ===== Animations ===== */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(60px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 10px;
+  }
+  /* ===== HEADER IMAGE LOGO ===== */
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-img {
+  width: 65px;
+  height: 65px;
+  border-radius: 20px;
+  animation: logoGlow 3s ease-in-out infinite alternate;
+  object-fit: cover;
+}
+
+/* Animated glowing effect on logo image */
+@keyframes logoGlow {
+  0% { box-shadow: 0 0 10px rgba(235, 202, 14, 0.3); transform: scale(1); }
+  100% { box-shadow: 0 0 25px rgba(0, 195, 255, 0.8); transform: scale(1.05); }
+}
+
+</style>
+<!-- Website Favicon -->
+<link rel="icon" type="image/png" href="2.png">
+
+</head>
+<body>
+ <header id="header">
+  <div class="logo-section">
+    <img src="1.png" alt="Athrexx AI Logo" class="logo-img">
+    <h1 class="logo">
+      <span class="ath">ATH</span><span class="rexx">REXX</span> <span class="ai">AI</span>
+    </h1>
+  </div>
+
+  <div class="nav-buttons">
+    <button id="clearBtn">🗑️</button>
+    <button id="modeToggle">🌙</button>
+  </div>
+</header>
+
+
+  <div class="container">
+    <div class="chat-box" id="chatBox">
+      <div class="message bot">👋 Hi! I'm <b>Athrexx</b>, your AI assistant. How can I help you today?</div>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type your message...">
+      <button class="send" id="sendBtn">➤</button>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 <a href="#">Athrexx AI</a> | Devlpoed by <strong>Atharv Waghamare</strong>
+  </footer>
+
+<script>
+const chatBox = document.getElementById('chatBox');
+const userInput = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+const clearBtn = document.getElementById('clearBtn');
+const modeToggle = document.getElementById('modeToggle');
+const header = document.getElementById('header');
+
+// Floating header particles
+for (let i = 0; i < 10; i++) {
+  const particle = document.createElement('div');
+  particle.classList.add('particle');
+  particle.style.width = particle.style.height = Math.random() * 6 + 4 + 'px';
+  particle.style.left = Math.random() * window.innerWidth + 'px';
+  particle.style.top = Math.random() * 60 + 'px';
+  particle.style.animationDelay = Math.random() * 6 + 's';
+  header.appendChild(particle);
+}
+
+// Send message
+sendBtn.addEventListener('click', sendMessage);
+userInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+
+function appendMessage(sender, text) {
+  const div = document.createElement('div');
+  div.classList.add('message', sender);
+  div.innerHTML = text;
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+async function sendMessage() {
+  const message = userInput.value.trim();
+  if (!message) return;
+
+  appendMessage('user', message);
+  userInput.value = '';
+
+  const loading = document.createElement('div');
+  loading.classList.add('message', 'bot');
+  loading.textContent = 'Typing...';
+  chatBox.appendChild(loading);
+
+  try {
+    const res = await fetch('chat_api.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({message})
+    });
+    const data = await res.json();
+    chatBox.removeChild(loading);
+    appendMessage('bot', data.reply || "Sorry, I didn’t understand that.");
+  } catch (err) {
+    chatBox.removeChild(loading);
+    appendMessage('bot', "⚠️ Error: Unable to connect to API.");
+  }
+}
+
+// Clear Chat
+clearBtn.addEventListener('click', () => {
+  chatBox.innerHTML = '<div class="message bot">🧹 Chat cleared. Start fresh with Athrexx!</div>';
+});
+
+// Dark Mode
+modeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+  modeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+});
+</script>
+</body>
+</html>
